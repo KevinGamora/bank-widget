@@ -24,6 +24,6 @@ def sort_by_date(data: List[Dict], reverse: bool = True) -> List[Dict]:
         reverse (bool): Порядок сортировки, по умолчанию по убыванию (True).
 
     Returns:
-        List[Dict]: Новый список, отсортированный по значению ключа 'date'.
+        List[Dict]: Нов11ый список, отсортированный по значению ключа 'date'.
     """
     return sorted(data, key=lambda x: x['date'], reverse=reverse)
