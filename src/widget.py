@@ -1,13 +1,16 @@
+# src/widget.py
+
 from src.masks import mask_card_number, mask_account_number
+
 
 def mask_info(info: str) -> str:
     """
     Маскирует номер карты или счета в предоставленной строке.
 
-    Аргументы:
+    Args:
         info (str): Строка, содержащая тип и номер карты или счета.
 
-    Возвращает:
+    Returns:
         str: Строка с замаскированным номером.
     """
     parts = info.split()
