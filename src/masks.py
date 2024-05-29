@@ -6,7 +6,7 @@ def mask_card_number(card_number: str) -> str:
     Маскирует номер карты. Видны первые 6 и последние 4 цифры, остальные заменены на '*'.
     Формат: XXXX XX** **** XXXX
 
-    :param card_number: str - номер карты
+    :param card_number: str - номееер карты
     :return: str - маскированный номер карты
     """
     return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
