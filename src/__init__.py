@@ -1,1 +1,1 @@
-#GitHUB Заработай, я на коленях стою
+# This is an init file for the src module

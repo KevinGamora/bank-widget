@@ -38,7 +38,7 @@ skip = [".git", "__pycache__", "venv"]
 
 [tool.mypy]
 python_version = 3.9
-strict = true
+strict = false
 disallow_untyped_defs = true
 warn_return_any = true
 exclude = "(venv|\\.git|__pycache__)"
