@@ -1,3 +1,4 @@
+
 def mask_account_number(account_number: str) -> str:
     """
     Маскирует номер счета, оставляя видимыми только первые и последние 4 цифры.
@@ -9,6 +10,7 @@ def mask_account_number(account_number: str) -> str:
         str: Замаскированный номер счета.
     """
     return f"{account_number[:4]}{'*' * (len(account_number) - 8)}{account_number[-4:]}"
+
 
 def mask_card_number(card_number: str) -> str:
     """

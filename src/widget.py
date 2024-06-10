@@ -1,4 +1,7 @@
+# src/widget.py
+
 from src.masks import mask_account_number, mask_card_number
+
 
 def mask_info(info: str) -> str:
     """
@@ -24,6 +27,7 @@ def mask_info(info: str) -> str:
 
     return f"{name} {masked_number}"
 
+
 class Widget:
     def __init__(self, name: str, value: int):
         self.name = name
@@ -31,6 +35,3 @@ class Widget:
 
     def display(self) -> str:
         return f"Widget {self.name}: {self.value}"
-
-    def add_transaction(self, amount: int):
-        self.value += amount

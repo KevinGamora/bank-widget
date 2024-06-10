@@ -16,6 +16,7 @@ def format_date(date_str: str) -> str:
     date = datetime.fromisoformat(date_str)
     return date.strftime('%d.%m.%Y')
 
+
 def format_currency(value: float) -> str:
     """
     Форматирует число как денежную сумму.
