@@ -1,6 +1,6 @@
 # src/generators.py
 
-from typing import List, Dict, Iterator, Union
+from typing import Dict, Iterator, List, Union
 
 
 def filter_by_currency(transactions: Union[List[Dict], Iterator[Dict]], currency_code: str) -> Iterator[Dict]:

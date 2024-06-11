@@ -1,27 +1,27 @@
+import re
+
 
 def mask_account_number(account_number: str) -> str:
     """
-    Маскирует номер счета, оставляя видимыми только первые и последние 4 цифры.
+    Маскирует номер банковского счета, оставляя первые и последние 4 цифры видимыми.
 
     Args:
-        account_number (str): Полный номер счета.
+        account_number (str): Номер банковского счета.
 
     Returns:
         str: Замаскированный номер счета.
     """
-    return f"{account_number[:4]}{'*' * (len(account_number) - 8)}{account_number[-4:]}"
+    return re.sub(r"(?<=\d{4})\d(?=\d{4})", "*", account_number)
 
 
 def mask_card_number(card_number: str) -> str:
     """
-    Маскирует номер карты, оставляя видимыми только первые и последние 4 цифры.
-    Разделяет номер на группы по 4 цифры.
+    Маскирует номер банковской карты, оставляя первые и последние 4 цифры видимыми.
 
     Args:
-        card_number (str): Полный номер карты.
+        card_number (str): Номер банковской карты.
 
     Returns:
         str: Замаскированный номер карты.
     """
-    masked_middle = '*' * 4 + ' ' + '*' * 4
-    return f"{card_number[:4]} {masked_middle} {card_number[-4:]}"
+    return re.sub(r"(\d{4})\d{8}(\d{4})", r"\1********\2", card_number)
