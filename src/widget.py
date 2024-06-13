@@ -27,9 +27,17 @@ def mask_info(info: str) -> str:
 
 
 class Widget:
-    def __init__(self, name: str, value: int):
+    def __init__(self, name: str, value: float):
         self.name = name
         self.value = value
+        self.transactions = []
+
+    def add_transaction(self, amount: float):
+        self.transactions.append(amount)
+        self.value += amount
 
     def display(self) -> str:
         return f"Widget {self.name}: {self.value}"
+
+    def __repr__(self):
+        return f"Widget(name={self.name}, value={self.value}, transactions={self.transactions})"

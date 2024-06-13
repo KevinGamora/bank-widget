@@ -1,24 +1,22 @@
-# Проект: Bank Widget
+# Bank Widget Project
 
 ## Описание
 
-Этот проект представляет собой виджет для управления банковскими операциями.
+Проект включает различные функции для работы с банковскими транзакциями, включая маскирование данных, обработку транзакций и генерацию отчетов.
 
 ## Новые функции
 
-### Модуль generators
+### Декораторы
 
-Модуль `generators` содержит следующие функции:
+#### log
 
-- **filter_by_currency(transactions, currency_code)**: Возвращает итератор по операциям с указанной валютой.
-- **transaction_descriptions(transactions)**: Возвращает итератор по описаниям операций.
-- **card_number_generator(start, end)**: Генерирует номера карт в формате XXXX XXXX XXXX XXXX в заданном диапазоне.
+Декоратор `log` логирует вызовы функций и их результаты. Логи могут записываться в файл или выводиться в консоль.
 
-#### Примеры использования
-
-**filter_by_currency**
+**Использование:**
 
 ```python
-usd_transactions = filter_by_currency(transactions, "USD")
-for _ in range(2):
-    print(next(usd_transactions)["id"])
+@log(filename="mylog.txt")
+def my_function(x, y):
+    return x + y
+
+my_function(1, 2)

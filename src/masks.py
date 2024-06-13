@@ -24,4 +24,4 @@ def mask_card_number(card_number: str) -> str:
     Returns:
         str: Замаскированный номер карты.
     """
-    return re.sub(r"(\d{4})\d{8}(\d{4})", r"\1********\2", card_number)
+    return f"{card_number[:4]} {'*' * 4} {'*' * 4} {card_number[-4:]}"

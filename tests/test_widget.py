@@ -12,6 +12,8 @@ def test_add_transaction():
     widget = Widget(name="Test Widget", value=100)
     widget.add_transaction(50)
     assert widget.value == 150
+    assert widget.transactions == [50]
+
 def test_widget_display():
-    widget = Widget(name="TestWidget", value=100)
-    assert widget.display() == "Widget TestWidget: 100"
+    widget = Widget(name="Test Widget", value=100)
+    assert widget.display() == "Widget Test Widget: 100"
