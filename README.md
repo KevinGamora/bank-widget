@@ -1,19 +1,18 @@
+# Bank Widget
+
 ## Новый функционал
 
-### Поддержка чтения данных из файлов JSON, CSV и XLSX
+Теперь проект поддерживает чтение данных о финансовых транзакциях из файлов форматов JSON, CSV и XLSX.
 
-Проект теперь поддерживает чтение данных о финансовых транзакциях из файлов форматов JSON, CSV и XLSX.
+### Основные функции
 
-#### Примеры использования
+- Чтение транзакций из файлов JSON, CSV и XLSX.
+- Фильтрация транзакций по статусу.
+- Сортировка транзакций по дате.
+- Фильтрация транзакций по валюте.
+- Поиск транзакций по строке в описании.
+- Подсчет количества транзакций по категориям.
 
-```python
-from utils import read_transactions_from_json, read_transactions_from_csv, read_transactions_from_xlsx
+### Логирование
 
-# Чтение данных из JSON-файла
-transactions_json = read_transactions_from_json('path/to/transactions.json')
-
-# Чтение данных из CSV-файла
-transactions_csv = read_transactions_from_csv('path/to/transactions.csv')
-
-# Чтение данных из XLSX-файла
-transactions_xlsx = read_transactions_from_xlsx('path/to/transactions.xlsx')
+Проект реализует логирование для каждого модуля. Логи записываются в папку `logs` в корне проекта. Формат записи лога включает метку времени, название модуля, уровень серьезности и сообщение.
