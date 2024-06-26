@@ -1,21 +1,19 @@
 ## Новый функционал
 
-### Логирование
+### Поддержка чтения данных из файлов JSON, CSV и XLSX
 
-Добавлено логирование для следующих модулей:
-- `masks`
-- `utils`
+Проект теперь поддерживает чтение данных о финансовых транзакциях из файлов форматов JSON, CSV и XLSX.
 
-Логи записываются в папку `logs` в корне проекта. Каждый модуль имеет свой отдельный лог-файл с расширением `.log`.
-
-Формат записи лога включает метку времени, название модуля, уровень серьезности и сообщение, описывающее событие или ошибку, которые произошли.
-
-### Примеры использования
-
-Пример использования функций маскировки с логированием:
+#### Примеры использования
 
 ```python
-from src.masks import mask_account_number, mask_card_number
+from utils import read_transactions_from_json, read_transactions_from_csv, read_transactions_from_xlsx
 
-masked_account = mask_account_number("1234567890123456")
-masked_card = mask_card_number("1234567812345678")
+# Чтение данных из JSON-файла
+transactions_json = read_transactions_from_json('path/to/transactions.json')
+
+# Чтение данных из CSV-файла
+transactions_csv = read_transactions_from_csv('path/to/transactions.csv')
+
+# Чтение данных из XLSX-файла
+transactions_xlsx = read_transactions_from_xlsx('path/to/transactions.xlsx')

@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import pandas as pd
 from typing import List, Dict
 from datetime import datetime
 
@@ -76,4 +77,53 @@ def read_transactions_from_json(filepath: str) -> List[Dict]:
         return []
     except json.JSONDecodeError as e:
         logger.error(f"JSON decode error in file {filepath}: {e}")
+        return []
+
+
+def read_transactions_from_csv(filepath: str) -> List[Dict]:
+    """
+    Читает данные о финансовых транзакциях из CSV-файла.
+
+    Args:
+        filepath (str): Путь до CSV-файла.
+
+    Returns:
+        List[Dict]: Список словарей с данными о транзакциях.
+    """
+    try:
+        data = pd.read_csv(filepath)
+        transactions = data.to_dict(orient='records')
+        logger.debug(f"Read {len(transactions)} transactions from {filepath}")
+        return transactions
+    except FileNotFoundError:
+        logger.error(f"File not found: {filepath}")
+        return []
+    except pd.errors.EmptyDataError as e:
+        logger.error(f"Empty CSV error in file {filepath}: {e}")
+        return []
+    except pd.errors.ParserError as e:
+        logger.error(f"CSV parse error in file {filepath}: {e}")
+        return []
+
+
+def read_transactions_from_xlsx(filepath: str) -> List[Dict]:
+    """
+    Читает данные о финансовых транзакциях из XLSX-файла.
+
+    Args:
+        filepath (str): Путь до XLSX-файла.
+
+    Returns:
+        List[Dict]: Список словарей с данными о транзакциях.
+    """
+    try:
+        data = pd.read_excel(filepath)
+        transactions = data.to_dict(orient='records')
+        logger.debug(f"Read {len(transactions)} transactions from {filepath}")
+        return transactions
+    except FileNotFoundError:
+        logger.error(f"File not found: {filepath}")
+        return []
+    except ValueError as e:
+        logger.error(f"Excel read error in file {filepath}: {e}")
         return []
