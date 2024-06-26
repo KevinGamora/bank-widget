@@ -1,5 +1,20 @@
 import json
+import logging
+import os
 from typing import List, Dict
+from datetime import datetime
+
+# Создание папки logs, если она не существует
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+# Настройка логера
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler('logs/utils.log', mode='w')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 
 def format_amount(amount: float, currency: str) -> str:
@@ -13,7 +28,9 @@ def format_amount(amount: float, currency: str) -> str:
     Returns:
         str: Форматированная строка с суммой и валютой.
     """
-    return f"{amount:.2f} {currency}"
+    formatted_amount = f"{amount:.2f} {currency}"
+    logger.debug(f"Formatted amount: {formatted_amount}")
+    return formatted_amount
 
 
 def format_date(date: str) -> str:
@@ -26,9 +43,14 @@ def format_date(date: str) -> str:
     Returns:
         str: Форматированная дата.
     """
-    from datetime import datetime
-    dt = datetime.fromisoformat(date)
-    return dt.strftime("%d-%m-%Y %H:%M:%S")
+    try:
+        dt = datetime.fromisoformat(date)
+        formatted_date = dt.strftime("%d-%m-%Y %H:%M:%S")
+        logger.debug(f"Formatted date: {formatted_date}")
+        return formatted_date
+    except ValueError as e:
+        logger.error(f"Error formatting date: {e}")
+        return ""
 
 
 def read_transactions_from_json(filepath: str) -> List[Dict]:
@@ -45,7 +67,13 @@ def read_transactions_from_json(filepath: str) -> List[Dict]:
         with open(filepath, 'r', encoding='utf-8') as file:
             data = json.load(file)
             if isinstance(data, list):
+                logger.debug(f"Read {len(data)} transactions from {filepath}")
                 return data
+            logger.warning(f"Data in {filepath} is not a list")
             return []
-    except (FileNotFoundError, json.JSONDecodeError):
+    except FileNotFoundError:
+        logger.error(f"File not found: {filepath}")
+        return []
+    except json.JSONDecodeError as e:
+        logger.error(f"JSON decode error in file {filepath}: {e}")
         return []
