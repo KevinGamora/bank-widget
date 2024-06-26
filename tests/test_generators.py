@@ -3,6 +3,7 @@
 import pytest
 from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
+
 transactions = [
     {
         "id": 939719570,
@@ -81,10 +82,12 @@ transactions = [
     }
 ]
 
+
 def test_filter_by_currency():
     usd_transactions = filter_by_currency(transactions, "USD")
     result = [tx["id"] for tx in usd_transactions]
     assert result == [939719570, 142264268, 895315941]
+
 
 def test_transaction_descriptions():
     descriptions = transaction_descriptions(transactions)
@@ -96,6 +99,7 @@ def test_transaction_descriptions():
         "Перевод с карты на карту",
         "Перевод организации"
     ]
+
 
 def test_card_number_generator():
     card_numbers = card_number_generator(1, 5)

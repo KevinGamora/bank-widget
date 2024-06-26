@@ -2,8 +2,10 @@ import sys
 import os
 import pytest  # Добавить этот импорт
 
+
 # Добавить директорию src в путь поиска модулей
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 
 @pytest.fixture
 def transactions():

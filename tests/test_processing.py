@@ -1,6 +1,7 @@
 import pytest
 from processing import filter_by_state, sort_by_date
 
+
 @pytest.mark.parametrize("state, expected", [
     ('EXECUTED', [
         {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
@@ -13,6 +14,7 @@ from processing import filter_by_state, sort_by_date
 ])
 def test_filter_by_state(transactions, state, expected):
     assert filter_by_state(transactions, state) == expected
+
 
 @pytest.mark.parametrize("reverse, expected", [
     (True, [

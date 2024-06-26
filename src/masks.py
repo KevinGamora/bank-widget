@@ -11,7 +11,8 @@ def mask_account_number(account_number: str) -> str:
     Returns:
         str: Замаскированный номер счета.
     """
-    return re.sub(r"(?<=\d{4})\d(?=\d{4})", "*", account_number)
+    masked_number = re.sub(r"(?<=\d{4})\d(?=\d{4})", "*", account_number)
+    return " ".join([masked_number[i:i + 4] for i in range(0, len(masked_number), 4)])
 
 
 def mask_card_number(card_number: str) -> str:
