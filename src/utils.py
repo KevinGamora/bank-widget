@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from typing import List, Dict
 from datetime import datetime
+import re
 
 # Создание папки logs, если она не существует
 if not os.path.exists('logs'):
@@ -127,3 +128,114 @@ def read_transactions_from_xlsx(filepath: str) -> List[Dict]:
     except ValueError as e:
         logger.error(f"Excel read error in file {filepath}: {e}")
         return []
+
+
+def search_transactions(transactions: List[Dict], search_term: str) -> List[Dict]:
+    """
+    Ищет транзакции по строке поиска в описании.
+
+    Args:
+        transactions (List[Dict]): Список транзакций.
+        search_term (str): Строка поиска.
+
+    Returns:
+        List[Dict]: Список транзакций, содержащих строку поиска в описании.
+    """
+    regex = re.compile(re.escape(search_term), re.IGNORECASE)
+    result = [transaction for transaction in transactions if regex.search(transaction.get('description', ''))]
+    logger.debug(f"Found {len(result)} transactions matching search term '{search_term}'")
+    return result
+
+
+def categorize_transactions(transactions: List[Dict], categories: List[str]) -> Dict[str, int]:
+    """
+    Подсчитывает количество транзакций по категориям.
+
+    Args:
+        transactions (List[Dict]): Список транзакций.
+        categories (List[str]): Список категорий.
+
+    Returns:
+        Dict[str, int]: Словарь с категориями и количеством транзакций в каждой категории.
+    """
+    category_count = {category: 0 for category in categories}
+    for transaction in transactions:
+        description = transaction.get('description', '').lower()
+        for category in categories:
+            if category.lower() in description:
+                category_count[category] += 1
+    logger.debug(f"Transaction counts by category: {category_count}")
+    return category_count
+
+
+def main():
+    print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
+    print("Выберите необходимый пункт меню:")
+    print("1. Получить информацию о транзакциях из JSON-файла")
+    print("2. Получить информацию о транзакциях из CSV-файла")
+    print("3. Получить информацию о транзакциях из XLSX-файла")
+
+    while True:
+        choice = input("Ваш выбор: ")
+        if choice in ['1', '2', '3']:
+            break
+        print("Неверный выбор. Пожалуйста, выберите 1, 2 или 3.")
+
+    file_path = input("Введите путь к файлу с транзакциями: ")
+
+    if choice == '1':
+        transactions = read_transactions_from_json(file_path)
+        file_type = 'JSON'
+    elif choice == '2':
+        transactions = read_transactions_from_csv(file_path)
+        file_type = 'CSV'
+    else:
+        transactions = read_transactions_from_xlsx(file_path)
+        file_type = 'XLSX'
+
+    if not transactions:
+        print(f"Не удалось загрузить транзакции из {file_type}-файла.")
+        return
+
+    print(f"Для обработки выбран {file_type}-файл.")
+
+    statuses = ["EXECUTED", "CANCELED", "PENDING"]
+    while True:
+        status = input("Введите статус, по которому необходимо выполнить фильтрацию. Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING: ").upper()
+        if status in statuses:
+            break
+        print(f"Статус операции '{status}' недоступен.")
+
+    filtered_transactions = [t for t in transactions if t.get('status', '').upper() == status]
+    print(f"Операции отфильтрованы по статусу '{status}'.")
+
+    sort_choice = input("Отсортировать операции по дате? Да/Нет: ").strip().lower()
+    if sort_choice == 'да':
+        sort_order = input("Отсортировать по возрастанию или по убыванию? ").strip().lower()
+        reverse = sort_order == 'по убыванию'
+        filtered_transactions.sort(key=lambda x: x.get('date', ''), reverse=reverse)
+
+    currency_choice = input("Выводить только рублевые транзакции? Да/Нет: ").strip().lower()
+    if currency_choice == 'да':
+        filtered_transactions = [t for t in filtered_transactions if t.get('currency', '').upper() == 'RUB']
+
+    search_choice = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ").strip().lower()
+    if search_choice == 'да':
+        search_term = input("Введите слово для поиска в описании: ").strip()
+        filtered_transactions = search_transactions(filtered_transactions, search_term)
+
+    if filtered_transactions:
+        print(f"Всего банковских операций в выборке: {len(filtered_transactions)}")
+        for t in filtered_transactions:
+            date = format_date(t.get('date', ''))
+            description = t.get('description', '')
+            account = t.get('account', '')
+            amount = format_amount(t.get('amount', 0.0), t.get('currency', ''))
+            print(f"\nДата: {date}\nОписание: {description}\nСчет: {account}\nСумма: {amount}")
+    else:
+        print("Нет операций, соответствующих критериям фильтрации.")
+
+    logger.info("Программа завершена.")
+
+if __name__ == "__main__":
+    main()
