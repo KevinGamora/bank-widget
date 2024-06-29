@@ -1,9 +1,12 @@
+"""
+Основной модуль программы для работы с банковскими транзакциями.
+"""
+
 import logging
 import os
-from src.utils import read_transactions_from_json, read_transactions_from_csv, read_transactions_from_xlsx
-from src.filters import filter_transactions_by_status, sort_transactions_by_date, filter_transactions_by_currency, search_transactions
+from utils import read_transactions_from_json, read_transactions_from_csv, read_transactions_from_xlsx
+from filters import filter_transactions_by_status, sort_transactions_by_date, filter_transactions_by_currency, search_transactions
 from collections import Counter
-
 
 # Настройка логирования
 if not os.path.exists('logs'):
@@ -17,6 +20,9 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 def main():
+    """
+    Основная функция для взаимодействия с пользователем и обработки транзакций.
+    """
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     print("Выберите необходимый пункт меню:")
     print("1. Получить информацию о транзакциях из JSON-файла")
@@ -56,7 +62,7 @@ def main():
         order = input("Отсортировать по возрастанию или по убыванию? ").lower()
         reverse = (order == "по убыванию")
         transactions = sort_transactions_by_date(transactions, reverse)
-        logger.info(f"Транзакции отсортированы по дате в порядке: {'убывания' if reverse else 'возрастания'}")
+        logger.info(f"Транзакции отсортированы по дате в порядке: {'убывания' если reverse еще 'возрастания'}")
 
     currency_choice = input("Выводить только рублевые транзакции? Да/Нет: ").lower()
     if currency_choice == 'да':

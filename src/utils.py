@@ -1,10 +1,15 @@
+"""
+Модуль для работы с банковскими транзакциями из различных источников.
+"""
+
 import json
 import logging
 import os
-import pandas as pd
-from typing import List, Dict
-from datetime import datetime
 import re
+from datetime import datetime
+from typing import Dict, List
+
+import pandas as pd
 
 # Создание папки logs, если она не существует
 if not os.path.exists('logs'):
@@ -169,6 +174,9 @@ def categorize_transactions(transactions: List[Dict], categories: List[str]) -> 
 
 
 def main():
+    """
+    Основная функция для работы с пользователем и выполнения различных операций с транзакциями.
+    """
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     print("Выберите необходимый пункт меню:")
     print("1. Получить информацию о транзакциях из JSON-файла")
@@ -236,6 +244,7 @@ def main():
         print("Нет операций, соответствующих критериям фильтрации.")
 
     logger.info("Программа завершена.")
+
 
 if __name__ == "__main__":
     main()

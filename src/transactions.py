@@ -1,6 +1,10 @@
-# transactions.py
+"""
+Модуль для чтения и обработки данных о финансовых транзакциях.
+"""
+
 import re
-from typing import List, Dict
+from typing import Dict, List
+
 import pandas as pd
 
 
@@ -16,7 +20,8 @@ def read_transactions_from_csv(filepath: str) -> List[Dict]:
     """
     try:
         df = pd.read_csv(filepath)
-        return df.to_dict('records')
+        transactions = df.to_dict('records')
+        return transactions
     except FileNotFoundError:
         return []
 
@@ -33,7 +38,8 @@ def read_transactions_from_xlsx(filepath: str) -> List[Dict]:
     """
     try:
         df = pd.read_excel(filepath)
-        return df.to_dict('records')
+        transactions = df.to_dict('records')
+        return transactions
     except FileNotFoundError:
         return []
 
@@ -50,7 +56,8 @@ def search_transactions(transactions: List[Dict], search_string: str) -> List[Di
         List[Dict]: Список транзакций, содержащих строку в описании.
     """
     pattern = re.compile(re.escape(search_string), re.IGNORECASE)
-    return [tx for tx in transactions if pattern.search(tx.get('description', ''))]
+    filtered_transactions = [tx for tx in transactions if pattern.search(tx.get('description', ''))]
+    return filtered_transactions
 
 
 def count_transactions_by_category(transactions: List[Dict], categories: List[str]) -> Dict[str, int]:

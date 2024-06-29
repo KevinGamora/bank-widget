@@ -25,6 +25,7 @@ file_handler.setFormatter(formatter)
 # Добавление обработчика к логгеру
 logger.addHandler(file_handler)
 
+
 def mask_account_number(account_number: str) -> str:
     """
     Маскирует номер банковского счета, заменяя средние цифры на звездочки.
@@ -39,6 +40,7 @@ def mask_account_number(account_number: str) -> str:
     masked_number = " ".join([masked_number[i:i + 4] for i in range(0, len(masked_number), 4)])
     logger.debug(f"Маскированный номер счета: {masked_number}")
     return masked_number
+
 
 def mask_card_number(card_number: str) -> str:
     """

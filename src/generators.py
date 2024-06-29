@@ -50,6 +50,7 @@ def card_number_generator(start: int, end: int):
         formatted_card_number = " ".join([card_number[i:i + 4] for i in range(0, len(card_number), 4)])
         yield formatted_card_number
 
+
 if __name__ == '__main__':
     transactions = [...]  # ваш список транзакций
     usd_transactions = filter_by_currency(transactions, "USD")
