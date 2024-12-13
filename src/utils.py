@@ -1,17 +1,27 @@
-# src/utils.py
-
-from datetime import datetime
-
-
-def format_date(date_str: str) -> str:
+def format_amount(amount: float, currency: str) -> str:
     """
-    Преобразует строку даты и времени в форматированную строку даты.
+    Форматирует сумму денег с указанием валюты.
 
     Args:
-        date_str (str): Строка в формате 'YYYY-MM-DDTHH:MM:SS.ssssss'
+        amount (float): Сумма денег.
+        currency (str): Валюта.
 
     Returns:
-        str: Строка в формате 'DD.MM.YYYY'
+        str: Форматированная строка с суммой и валютой.
     """
-    date = datetime.fromisoformat(date_str)
-    return date.strftime('%d.%m.%Y')
+    return f"{amount:.2f} {currency}"
+
+
+def format_date(date: str) -> str:
+    """
+    Форматирует дату из строки в удобочитаемый формат.
+
+    Args:
+        date (str): Дата в формате строки.
+
+    Returns:
+        str: Форматированная дата.
+    """
+    from datetime import datetime
+    dt = datetime.fromisoformat(date)
+    return dt.strftime("%d-%m-%Y %H:%M:%S")
